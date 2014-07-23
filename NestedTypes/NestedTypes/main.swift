@@ -46,8 +46,7 @@ struct BlackjackCard{
     
 }
 
-var rank = BlackjackCard.Rank.Jack
-;
+var rank = BlackjackCard.Rank.Jack.toRaw();
 
 let theAceOfSpades = BlackjackCard(rank:.Two, suit: .Spades)
 
