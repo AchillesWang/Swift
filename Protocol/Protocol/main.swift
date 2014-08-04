@@ -182,9 +182,105 @@ game.delegate = tracker
 game.play()
 
 
+protocol Named{
+    var name:String { get }
+}
+protocol Aged{
+    var age:Int { get }
+}
+
+struct Persons:Named,Aged{
+    var name:String
+    var age:Int
+}
+func wishHappyBirthday(celebrator:protocol<Named,Aged>){
+    println("name:\(celebrator.name),age:\(celebrator.age)");
+}
+
+var p = Persons(name: "汪潇翔", age: 10)
+
+wishHappyBirthday(p)
+
+@objc protocol HasArea{
+    var area:Double { get }
+}
+
+class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+}
 
 
+class Country: HasArea {
+    var area: Double
+    init(area: Double) { self.area = area }
+}
 
+class Animal {
+    var legs: Int
+    init(legs: Int) { self.legs = legs }
+}
+
+let objects:[AnyObject] = [Circle(radius: 10),Country(area: 10000),Animal(legs: 1)];
+
+for obj in objects{
+    if let object = obj as? HasArea{
+        println(object.area)
+    }else{
+        println("呵呵")
+    }
+}
+
+@objc protocol CounterDataSource{
+    @optional func incrementForCount(count:Int) -> Int
+    @optional var fixedIncrement:Int { get }
+}
+
+@objc class Counter{
+    var count = 0
+    var dataSource:CounterDataSource!
+    func increment(){
+        if let amount = dataSource?.incrementForCount?(count){
+            count += amount
+        }else if let amount = dataSource?.fixedIncrement{
+            count += amount
+        }
+    }
+}
+class ThreeSource:CounterDataSource{
+    var fixedIncrement:Int{
+        return 3;
+    }
+}
+
+var counter = Counter();
+counter.dataSource = ThreeSource();
+
+for _ in 1...4{
+    counter.increment();
+    println("count:\(counter.count)")
+}
+
+class TowardsZeroSource: CounterDataSource {
+    func incrementForCount(count: Int) -> Int {
+        if count == 0 {
+            return 0
+        } else if count < 0 {
+            return 1
+        } else {
+            return -1
+        }
+    }
+}
+
+counter.count = -4
+counter.dataSource = TowardsZeroSource()
+for _ in 1...5 {
+    counter.increment()
+    println(counter.count)
+}
 
 
 
