@@ -234,6 +234,7 @@ extension SnakesAndLadders:PrettyTextRepresentable{
 
 println(game.asPrettyText());
 
+<<<<<<< HEAD
 //let simonTheHamster = Hamster(name: "Simon")
 //
 //let somethingTextRepresentable:TextRepresentable = simonTheHamster
@@ -246,12 +247,23 @@ println(game.asPrettyText());
 //    println(thing.asText())
 //}
 =======
+=======
+>>>>>>> FETCH_HEAD
 protocol Named{
     var name:String { get }
 }
 protocol Aged{
     var age:Int { get }
 }
+<<<<<<< HEAD
+
+struct Persons:Named,Aged{
+    var name:String
+    var age:Int
+}
+func wishHappyBirthday(celebrator:protocol<Named,Aged>){
+    println("name:\(celebrator.name),age:\(celebrator.age)");
+=======
 
 struct Persons:Named,Aged{
     var name:String
@@ -269,6 +281,23 @@ wishHappyBirthday(p)
     var area:Double { get }
 }
 
+class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+>>>>>>> FETCH_HEAD
+}
+
+var p = Persons(name: "汪潇翔", age: 10)
+
+wishHappyBirthday(p)
+
+@objc protocol HasArea{
+    var area:Double { get }
+}
+
+<<<<<<< HEAD
 class Circle: HasArea {
     let pi = 3.1415927
     var radius: Double
@@ -363,6 +392,8 @@ class Animal {
 
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> FETCH_HEAD
 class Country: HasArea {
     var area: Double
     init(area: Double) { self.area = area }
@@ -373,6 +404,9 @@ class Animal {
     init(legs: Int) { self.legs = legs }
 }
 
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
 let objects:[AnyObject] = [Circle(radius: 10),Country(area: 10000),Animal(legs: 1)];
 
@@ -385,6 +419,9 @@ for obj in objects{
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
 >>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
