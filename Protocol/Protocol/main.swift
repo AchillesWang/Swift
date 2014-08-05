@@ -157,6 +157,8 @@ class SnakesAndLadders:DiceGame{
     }
 }
 
+
+
 class DiceGameTracker: DiceGameDelegate {
     var numberOfTurns = 0
     func gameDidStart(game: DiceGame) {
@@ -181,10 +183,259 @@ let game = SnakesAndLadders()
 game.delegate = tracker
 game.play()
 
+protocol TextRepresentable{
+    func asText()->String;
+}
+
+extension Dice:TextRepresentable{
+    func asText()->String{
+        return "A \(sides) - sided dice";
+    }
+}
+println("asText:\(game.dice.asText())")
 
 
+struct Hamster{
+    var name:String
+    func asText() -> String{
+        return "A hamster named \(name)"
+    }
+}
+
+extension Hamster:TextRepresentable{}
+
+protocol PrettyTextRepresentable: TextRepresentable {
+    func asPrettyText() -> String
+}
+
+<<<<<<< HEAD
+extension SnakesAndLadders:PrettyTextRepresentable{
+    func asPrettyText() -> String{
+        var output = asText() + ":\n"
+        for index in 1...finalSquare{
+            switch board[index]{
+                case let ladder where ladder>0:
+                        output += "▲ "
+                case let snake where snake<0:
+                        output += "▼ "
+                default:
+                        output += "○ "
+            }
+            if(index%5==0){
+                output += "\n"
+            }
+        }
+        return output;
+    }
+    func asText() ->String{
+        return self.name;
+    }
+}
+
+println(game.asPrettyText());
+
+//let simonTheHamster = Hamster(name: "Simon")
+//
+//let somethingTextRepresentable:TextRepresentable = simonTheHamster
+//
+//println(somethingTextRepresentable.asText());
+//
+//let things:[TextRepresentable] = [game.dice,somethingTextRepresentable]
+//
+//for thing in things {
+//    println(thing.asText())
+//}
+=======
+protocol Named{
+    var name:String { get }
+}
+protocol Aged{
+    var age:Int { get }
+}
+
+struct Persons:Named,Aged{
+    var name:String
+    var age:Int
+}
+func wishHappyBirthday(celebrator:protocol<Named,Aged>){
+    println("name:\(celebrator.name),age:\(celebrator.age)");
+}
+
+var p = Persons(name: "汪潇翔", age: 10)
+
+wishHappyBirthday(p)
+
+@objc protocol HasArea{
+    var area:Double { get }
+}
+
+class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+}
+>>>>>>> FETCH_HEAD
 
 
+<<<<<<< HEAD
+class Country: HasArea {
+    var area: Double
+    init(area: Double) { self.area = area }
+}
+
+<<<<<<< HEAD
+class Animal {
+    var legs: Int
+    init(legs: Int) { self.legs = legs }
+}
+
+let objects:[AnyObject] = [Circle(radius: 10),Country(area: 10000),Animal(legs: 1)];
+=======
+=======
+>>>>>>> FETCH_HEAD
+protocol Named{
+    var name:String { get }
+}
+protocol Aged{
+    var age:Int { get }
+}
+
+struct Persons:Named,Aged{
+    var name:String
+    var age:Int
+}
+func wishHappyBirthday(celebrator:protocol<Named,Aged>){
+    println("name:\(celebrator.name),age:\(celebrator.age)");
+}
+
+var p = Persons(name: "汪潇翔", age: 10)
+<<<<<<< HEAD
+
+wishHappyBirthday(p)
+=======
+
+wishHappyBirthday(p)
+
+@objc protocol HasArea{
+    var area:Double { get }
+}
+
+class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+}
+>>>>>>> FETCH_HEAD
+
+@objc protocol HasArea{
+    var area:Double { get }
+}
+
+class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+}
+>>>>>>> FETCH_HEAD
+
+for obj in objects{
+    if let object = obj as? HasArea{
+        println(object.area)
+    }else{
+        println("呵呵")
+    }
+}
+
+<<<<<<< HEAD
+=======
+class Country: HasArea {
+    var area: Double
+    init(area: Double) { self.area = area }
+}
+
+class Animal {
+    var legs: Int
+    init(legs: Int) { self.legs = legs }
+}
+
+<<<<<<< HEAD
+=======
+class Country: HasArea {
+    var area: Double
+    init(area: Double) { self.area = area }
+}
+
+class Animal {
+    var legs: Int
+    init(legs: Int) { self.legs = legs }
+}
+
+>>>>>>> FETCH_HEAD
+let objects:[AnyObject] = [Circle(radius: 10),Country(area: 10000),Animal(legs: 1)];
+
+for obj in objects{
+    if let object = obj as? HasArea{
+        println(object.area)
+    }else{
+        println("呵呵")
+    }
+}
+
+<<<<<<< HEAD
+>>>>>>> FETCH_HEAD
+=======
+>>>>>>> FETCH_HEAD
+@objc protocol CounterDataSource{
+    @optional func incrementForCount(count:Int) -> Int
+    @optional var fixedIncrement:Int { get }
+}
+
+@objc class Counter{
+    var count = 0
+    var dataSource:CounterDataSource!
+    func increment(){
+        if let amount = dataSource?.incrementForCount?(count){
+            count += amount
+        }else if let amount = dataSource?.fixedIncrement{
+            count += amount
+        }
+    }
+}
+class ThreeSource:CounterDataSource{
+    var fixedIncrement:Int{
+        return 3;
+    }
+}
+
+var counter = Counter();
+counter.dataSource = ThreeSource();
+
+for _ in 1...4{
+    counter.increment();
+    println("count:\(counter.count)")
+}
+
+class TowardsZeroSource: CounterDataSource {
+    func incrementForCount(count: Int) -> Int {
+        if count == 0 {
+            return 0
+        } else if count < 0 {
+            return 1
+        } else {
+            return -1
+        }
+    }
+}
+
+counter.count = -4
+counter.dataSource = TowardsZeroSource()
+for _ in 1...5 {
+    counter.increment()
+    println(counter.count)
+}
 
 
 
