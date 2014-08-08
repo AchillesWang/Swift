@@ -434,9 +434,9 @@ for obj in objects{
     var count = 0
     var dataSource:CounterDataSource!
     func increment(){
-        if let amount = dataSource?.incrementForCount?(count){
+        if let amount = dataSource!.incrementForCount?(count){
             count += amount
-        }else if let amount = dataSource?.fixedIncrement{
+        }else if let amount = dataSource!.fixedIncrement{
             count += amount
         }
     }
@@ -448,6 +448,7 @@ class ThreeSource:CounterDataSource{
 }
 
 var counter = Counter();
+
 counter.dataSource = ThreeSource();
 
 for _ in 1...4{
